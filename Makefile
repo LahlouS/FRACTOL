@@ -1,5 +1,5 @@
-NAME=fractol_image_test
-OBJ:=test_image.o
+NAME=fractol_test
+OBJ:=fractol.o
 INC=/usr/include
 INCLIB=$(INC)/../lib
 LFLAGS = -L. -lmlx -L$(INCLIB) -lXext -lX11 -lm

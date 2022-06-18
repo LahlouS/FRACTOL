@@ -7,8 +7,8 @@
 #include <X11/keysym.h>
 #include <X11/X.h>
 
-# define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 300
+# define WINDOW_WIDTH 1200
+# define WINDOW_HEIGHT 800
 # define MLX_ERROR 1
 # define RED_COL 0xFF0000
 # define BLUE_COL 0x0000FF
@@ -34,13 +34,13 @@ typedef struct s_data
     t_img   img;
 }   t_data;
 
-typedef struct s_rect
+typedef struct s_fract
 {
     int x;
     int y;
     int width;
     int height;
     int color;
-}   t_rect;
+}   t_fract;
 
 #endif
