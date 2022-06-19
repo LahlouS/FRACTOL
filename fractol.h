@@ -7,8 +7,8 @@
 #include <X11/keysym.h>
 #include <X11/X.h>
 
-# define WINDOW_WIDTH 1200
-# define WINDOW_HEIGHT 800
+# define WINDOW_WIDTH 1350
+# define WINDOW_HEIGHT 1200
 # define MLX_ERROR 1
 # define RED_COL 0xFF0000
 # define BLUE_COL 0x0000FF
@@ -27,20 +27,29 @@ typedef struct s_img
     int     endian;
 }   t_img;
 
+typedef struct s_fract
+{
+    double x;
+    double y;
+    double born_i1;
+    double born_i2;
+    double born_r1;
+    double born_r2;    
+    double scale;
+    int colors[3];
+}   t_fract;
+
 typedef struct s_data
 {
     void    *mlx_ptr;
     void    *win_ptr;
     t_img   img;
+    t_fract fract;
 }   t_data;
 
-typedef struct s_fract
-{
-    int x;
-    int y;
-    int width;
-    int height;
-    int color;
-}   t_fract;
+int mandelbrot_algo(t_data *data);
+int img_pix_put(t_img *img, int x, int y, int color);
+
 
 #endif
+
