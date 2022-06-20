@@ -7,14 +7,15 @@
 #include <X11/keysym.h>
 #include <X11/X.h>
 
-# define WINDOW_WIDTH 1350
-# define WINDOW_HEIGHT 1200
+# define WINDOW_WIDTH 1400
+# define WINDOW_HEIGHT 1250
 # define MLX_ERROR 1
 # define RED_COL 0xFF0000
 # define BLUE_COL 0x0000FF
 # define GREEN_COL 0x00FF00
 # define GREEN2_COL 0x00FF9F
 # define PURPLE_COL 0x800080
+# define PURPLE2_COL 0xD600FF
 # define BLUE2_COL 0x001EFF
 # define BLUE3_COL 0x00B8FF
 

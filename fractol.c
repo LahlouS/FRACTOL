@@ -31,12 +31,14 @@ void set_fract(t_fract *fract)
     fract->colors[0] = 0x800080;
     fract->colors[1] = 0x00B8FF;
     fract->colors[2] = 0xFF0000;
-    fract->scale = 600;
+    fract->scale = 500;
     
 }
 
 int menu(t_data *data)
 {
+    printf("image->bits_per_pix = %d\nimage->line_len = %d\nimage->endian = %d\n", data->img.bits_per_pix, data->img.line_len, data->img.endian);
+
     if (data->win_ptr)
     {
         mandelbrot_algo(data);
@@ -58,8 +60,8 @@ int main(void)
     t_data data;
     
     set_data(&data);
-    set_img(&data.img, &data);
-    set_fract(&data.fract);
+    set_img(&(data.img), &data);
+    set_fract(&(data.fract));
 
 
     /*gestion des evenements*/
