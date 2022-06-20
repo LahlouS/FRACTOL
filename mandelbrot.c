@@ -1,82 +1,104 @@
 #include "fractol.h"
 
+int get_color(int i, int prec)
+{
+// 	if (i == prec)
+// 		return (0x000000);
+// 	else if (i < prec && i > 200)
+// 		return (0x0000FF);
+// 	else if (i <= 200 && i > 80)
+// 		return (0xFF0000);
+// 	else if (i <= 80 && i > 40)
+// 		return (0xD600FF);
+// 	else if (i <= 40 && i > 20)
+// 		return (0x00B8FF);
+// 	else if (i <= 20 && i > 17)
+// 		return (0xFFFFFF);
+// 	else if (i <= 17 && i > 14)
+// 		return (0xB30000);
+// 	else if (i <= 14 && i > 13)
+// 		return (0x9C7EB8);
+// 	else if (i <= 13 && i > 11)
+// 		return (0x4C344C);
+// 	else if (i <= 11 && i > 9)
+// 		return (0x780C3D);
+// 	else if (i <= 9 && i > 8)
+// 		return (0xA8CBD3);
+// 	else
+// 		return (0x808080);
+
+	if (i == prec)
+		return (0x0D0208);
+	else if (i < prec && i > 200)
+		return (0x00FF41);
+	else if (i <= 200 && i > 80)
+		return (0x00FF41);
+	else if (i <= 80 && i > 40)
+		return (0x008711);
+	else if (i <= 40 && i > 20)
+		return (0xFFFFFF);
+	else if (i <= 20 && i > 17)
+		return (0x003B00);
+	else if (i <= 17 && i > 14)
+		return (0x008711);
+	else if (i <= 14 && i > 13)
+		return (0x00FF41);
+	else if (i <= 13 && i > 11)
+		return (0x0D0208);
+	else if (i <= 11 && i > 9)
+		return (0x003B00);
+	else if (i <= 9 && i > 8)
+		return (0x008711);
+	else
+		return (0xD0208);
+}
+
 int img_pix_put(t_img *img, int x, int y, int color)
 {
-    char    *pixel;
-    int     i;
+	char    *pixel;
+	int     i;
 
-    // printf("\tbpp = %d\n\tx = %d\n\ty = %d\n\tcolor = %d\n\timg->line_len = %d\n", \
-    // img->bits_per_pix, x, y, color, img->line_len);
+	// printf("\tbpp = %d\n\tx = %d\n\ty = %d\n\tcolor = %d\n\timg->line_len = %d\n", \
+	// img->bits_per_pix, x, y, color, img->line_len);
 
-    i = img->bits_per_pix - 8;
-    pixel = img->addr + (y * img->line_len + x * (img->bits_per_pix / 8));
-    while (i >= 0)
-    {
-        if (img->endian != 0)
+	i = img->bits_per_pix - 8;
+	pixel = img->addr + (y * img->line_len + x * (img->bits_per_pix / 8));
+	while (i >= 0)
+	{
+		if (img->endian != 0)
 			*pixel++ = (color >> i) & 0xFF;
 		else
 			*pixel++ = (color >> (img->bits_per_pix - 8 - i)) & 0xFF;
 		i -= 8;
-    }
+	}
 }
 
 int mandelbrot_algo(t_data *data)
 {
-    t_fract *fract;
-    double c_r;
-    double c_i;
-    double z_r;
-    double z_i;
-    double tmp;
-    int i = 0;
-    double precision = 400;
+	t_fract *fract;
+	double tmp;
+	int i = 0;
 
-    /*a degager*/
-    double img_x;
-    double img_y;
-    double x = 0;
-    double y = 0;
-    fract = &(data->fract);
-    img_x = (fract->born_i2 - fract->born_i1) * fract->scale;
-    img_y = (fract->born_r2 - fract->born_r1) * fract->scale;
-   // printf("img_x = %f\nimg_y = %f\n", img_x, img_y);
-    /*Tu rajoutera les deux variable img_x et img_y dans la struct afin de les initialiser
-      directement dans la fonction  | set_fract(t_fract *fract) | */
-      fract->x = 0;
-    while (fract->x < img_x)
-    {
-        (fract->y) = 0;
-        while (fract->y < img_y)
-        {
-            c_r = (fract->x / fract->scale) + fract->born_i1;
-            c_i = (fract->y / fract->scale) + fract->born_r1;
-            z_r = 0;
-            z_i = 0;
-            i = 0;
-            while ((z_r*z_r + z_i*z_i) < 4 && i < precision)
-            {
-                tmp = z_r;
-                z_r = z_r*z_r - z_i*z_i + c_r;
-                z_i = 2*z_i*tmp + c_i;
-                i++;
-            }
-            //printf("z_r*z_r + z_i*z_i = %f\n", (z_r*z_r + z_i*z_i));
-            if (i == precision && (z_r*z_r + z_i*z_i) < 1)
-                img_pix_put(&(data->img), (int)fract->x, (int)fract->y, 0x000000);
-            if (i == precision)
-                img_pix_put(&(data->img), (int)fract->x, (int)fract->y, 0xFF8C00);
-            else if (i < precision && i > 200)
-                img_pix_put(&(data->img), (int)fract->x, (int)fract->y, GREEN2_COL);
-            else if (i <= 200 && i > 80)
-                img_pix_put(&(data->img), (int)fract->x, (int)fract->y, RED_COL);
-            else if (i <= 80 && i > 40)
-                img_pix_put(&(data->img), (int)fract->x, (int)fract->y, PURPLE2_COL);
-            else if (i <= 40 && i > 20)
-                img_pix_put(&(data->img), (int)fract->x, (int)fract->y, GREEN2_COL);
-            else
-                img_pix_put(&(data->img), fract->x, fract->y, 0x00B8FF);
-            (fract->y)++;
-        }
-    (fract->x)++;
-    }
+	fract = &(data->fract);
+	fract->x = -1;
+	while (++(fract->x) < fract->img_x)
+	{
+		(fract->y) = -1;
+		while (++(fract->y) < fract->img_y)
+		{
+			fract->c_r = (((fract->x)) / (fract->scale * fract->scale_zoom)) + (fract->born_i1);
+			fract->c_i = (((fract->y)) / (fract->scale * fract->scale_zoom)) + (fract->born_r1 * fract->born_zoom);
+			fract->z_r = (((fract->x)) / (fract->scale * fract->scale_zoom)) + (fract->born_i1);
+			fract->z_i = (((fract->y)) / (fract->scale * fract->scale_zoom)) + (fract->born_r1 * fract->born_zoom);
+			i = 0;
+			while ((fract->z_r*fract->z_r + fract->z_i*fract->z_i) < 4 && i < fract->prec)
+			{
+				tmp = fract->z_r;
+				fract->z_r = fract->z_r*fract->z_r - fract->z_i*fract->z_i + (fract->c_r);
+				fract->z_i = 2*fract->z_i*tmp + (fract->c_i);
+				i++;
+			}
+			img_pix_put(&(data->img), (int)fract->x, (int)fract->y, get_color(i, fract->prec));
+		}
+	}
 }

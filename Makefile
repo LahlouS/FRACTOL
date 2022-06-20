@@ -1,6 +1,7 @@
 NAME=fractol_test
 OBJ:=fractol.o\
-mandelbrot.o
+mandelbrot.o\
+things.o\
 
 INC=/usr/include
 INCLIB=$(INC)/../lib
