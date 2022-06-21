@@ -36,8 +36,11 @@ typedef struct s_fract
     double c_i;
     double z_r;
     double z_i;
-    double  scale_zoom;
-    double  born_zoom;
+    double  scale_z;
+    double  i_zo;
+    double  r_zo;
+    int ind;
+    int (*col[5])(int, int);
 }   t_fract;
 
 typedef struct s_data
@@ -45,14 +48,21 @@ typedef struct s_data
     void    *mlx_ptr;
     void    *win_ptr;
     int     moves;
+    int     set;
     t_img   img;
     t_fract fract;
 }   t_data;
 
-int mandelbrot_algo(t_data *data);
-int img_pix_put(t_img *img, int x, int y, int color);
-int get_color(int i, int prec);
-int zoom_front(int *moves, t_fract *fract);
-
+int     mandelbrot_algo(t_data *data);
+int     matrix(int i, int prec);
+int     cyber_punk(int i, int prec);
+int     retro(int i, int prec);
+int     black_white(int i, int prec);
+int     dont_know(int i, int prec);
+int     img_pix_put(t_img *img, int x, int y, int color);
+int     zoom_front(int *moves, int x, int y, t_fract *fract);
+int     zoom_back(int *moves, int x, int y, t_fract *fract);
+void    init_formula(t_data *data, t_fract *fract);
+int     ft_atoi(const char *nptr);
 #endif
 

@@ -11,3 +11,30 @@ https://aurelienbrabant.fr/blog/getting-started-with-the-minilibx
 
 Comprendre coment utiliser les images de la minilibx
 https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx
+
+
+
+// 	if (i == prec)
+// 		return (0x000000);
+// 	else if (i < prec && i > 200)
+// 		return (0x0000FF);
+// 	else if (i <= 200 && i > 80)
+// 		return (0xFF0000);
+// 	else if (i <= 80 && i > 40)
+// 		return (0xD600FF);
+// 	else if (i <= 40 && i > 20)
+// 		return (0x00B8FF);
+// 	else if (i <= 20 && i > 17)
+// 		return (0xFFFFFF);
+// 	else if (i <= 17 && i > 14)
+// 		return (0xB30000);
+// 	else if (i <= 14 && i > 13)
+// 		return (0x9C7EB8);
+// 	else if (i <= 13 && i > 11)
+// 		return (0x4C344C);
+// 	else if (i <= 11 && i > 9)
+// 		return (0x780C3D);
+// 	else if (i <= 9 && i > 8)
+// 		return (0xA8CBD3);
+// 	else
+// 		return (0x808080);
