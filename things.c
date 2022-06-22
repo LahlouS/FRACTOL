@@ -1,58 +1,5 @@
 #include "fractol.h"
 
-int zoom_front(int *moves, int x, int y, t_fract *fract)
-{
-    *moves = 0;
-    fract->scale_z += 0;//.04;
-    if (y > ((WINDOW_HEIGHT / 2) - WINDOW_HEIGHT / 6))
-        fract->i_zo += 0.02;
-    else if (y < ((WINDOW_HEIGHT / 2) + WINDOW_HEIGHT / 6))
-        fract->i_zo -= 0.02;
-    if (x > ((WINDOW_WIDTH / 2) - WINDOW_WIDTH / 6))
-        fract->r_zo += 0.02;
-    if (x < ((WINDOW_WIDTH / 2) + WINDOW_WIDTH / 6))
-        fract->r_zo -= 0.02;
-}
-
-int zoom_back(int *moves, int x, int y, t_fract *fract)
-{
-    *moves = 0;
-    fract->scale_z -= 0.04;
-    if (y > ((WINDOW_HEIGHT / 2) - WINDOW_HEIGHT / 6))
-        fract->i_zo += 0.02;
-    else if (y < ((WINDOW_HEIGHT / 2) + WINDOW_HEIGHT / 6))
-        fract->i_zo -= 0.02;
-    if (x > ((WINDOW_WIDTH / 2) - WINDOW_WIDTH / 6))
-        fract->r_zo += 0.02;
-    if (x < ((WINDOW_WIDTH / 2) + WINDOW_WIDTH / 6))
-        fract->r_zo -= 0.02;
-}
-
-void    init_formula(t_data *data, t_fract *fract)
-{
-    if (data->set == 0)
-    {
-        fract->c_r = (((fract->x)) / (fract->scale * fract->scale_z)) + (fract->born_i1 * fract->r_zo);
-        fract->c_i = (((fract->y)) / (fract->scale * fract->scale_z)) + (fract->born_r1 * fract->i_zo);
-        fract->z_r = 0;
-        fract->z_i = 0;
-    }
-    else if (data->set == 1)
-    {
-        fract->c_r = 0.3;
-        fract->c_i = 0.5;
-        fract->z_r = (((fract->x)) / (fract->scale * fract->scale_z)) + (fract->born_i1 * fract->r_zo);
-        fract->z_i = (((fract->y)) / (fract->scale * fract->scale_z)) + (fract->born_r1 * fract->i_zo); 
-    }
-    else if (data->set == 2)
-    {
-        fract->c_r = -0.038088;
-        fract->c_i = 0.97546;
-        fract->z_r = (((fract->x)) / (fract->scale * fract->scale_z)) + (fract->born_i1 * fract->r_zo);
-        fract->z_i = (((fract->y)) / (fract->scale * fract->scale_z)) + (fract->born_r1 * fract->i_zo); 
-    }
-}
-
 int	ft_atoi(const char *nptr)
 {
 	int	res;
@@ -69,3 +16,67 @@ int	ft_atoi(const char *nptr)
 	}
 	return (res * sign);
 }
+
+double	ft_strtod(const char *nptr)
+{
+	double	res;
+	double	sign;
+	double	nb_dec;
+
+	res = 0;
+	nb_dec = 1;
+	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13) || *nptr == '+')
+		nptr++;
+	sign = ((*nptr == '-') * -1) + (*nptr != '-');
+	nptr += (*nptr == '-');
+	while (*nptr <= '9' && *nptr >= '0')
+	{
+		res = res * 10 + ((*nptr) - 48);
+		nptr++;
+	}
+	nptr += (*nptr == '.');
+	while (*nptr <= '9' && *nptr >= '0')
+	{
+		res = res * 10 + ((*nptr) - 48);
+		nb_dec *= 10;
+		nptr++;
+	}
+	return ((res * sign) / nb_dec);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < n)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		if (s1[i] == '\0' && s2[i] == '\0')
+			return (0);
+	}
+	return (0);
+}
+
+int ft_check_error(int ac, char **av)
+{
+    if (ac == 2 && !(ft_strncmp(*(av + 1), "mandelbrot", 65)))
+        return (0);
+    if (ac == 4 && !(ft_strncmp(*(av + 1), "julia1", 65)) && (ft_strncmp(*(av + 2), "0", 65)))
+        return (0);
+    ft_man();
+    return (1);
+}
+
+void ft_man(void)
+{
+    if (write(1, "\n\tERREUR ARGUMENTS ENTRE\n\n-->liste des arguments valides:\n", 58))
+        ;
+    if (write(1, ">\tmandelbrot\n>\tjulia1 reel_param imaginaire_param\n\n", 51))
+        ;
+    if (write(1, "\t-->ex: ./fractol julia1 0.3 0.5\n", 33))
+        ;
+    if (write(1, "\t-->ex: ./fractol mandelbrot\n\n", 30))
+        ;
+} 

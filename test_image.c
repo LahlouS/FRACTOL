@@ -11,7 +11,6 @@ int img_pix_put(t_img *img, int x, int y, int color)
     {
         if (img->endian != 0)
 			*pixel++ = (color >> i) & 0xFF;
-		/* little endian, LSB is the leftmost bit */
 		else
 			*pixel++ = (color >> (img->bits_per_pix - 8 - i)) & 0xFF;
 		i -= 8;
@@ -48,11 +47,6 @@ int get_rect(t_img *img, t_rect rect)
     return (0);
 }
 
-int no_event(void *data)
-{
- //   printf("coucou no event\n");
-    return (0);
-}
 int escape_window(int keysym, t_data *data)
 {
     if (keysym == XK_Escape)

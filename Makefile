@@ -1,4 +1,4 @@
-NAME=fractol_test
+NAME=fractol
 OBJ:=fractol.o\
 mandelbrot.o\
 things.o\

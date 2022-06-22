@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <mlx.h>
 #include <X11/keysym.h>
 #include <X11/X.h>
@@ -48,21 +49,27 @@ typedef struct s_data
     void    *mlx_ptr;
     void    *win_ptr;
     int     moves;
-    int     set;
+    int     arg;
+    double  set[2];
     t_img   img;
     t_fract fract;
 }   t_data;
 
 int     mandelbrot_algo(t_data *data);
+int	    img_pix_put(t_img *img, int x, int y, int color);
 int     matrix(int i, int prec);
 int     cyber_punk(int i, int prec);
 int     retro(int i, int prec);
 int     black_white(int i, int prec);
 int     dont_know(int i, int prec);
-int     img_pix_put(t_img *img, int x, int y, int color);
+int     set_data(t_data *data, char *arg, char *arg1, char *arg2);
 int     zoom_front(int *moves, int x, int y, t_fract *fract);
 int     zoom_back(int *moves, int x, int y, t_fract *fract);
 void    init_formula(t_data *data, t_fract *fract);
 int     ft_atoi(const char *nptr);
+double  ft_strtod(const char *nptr);
+int     ft_check_error(int ac, char **av);
+int     ft_strncmp(const char *s1, const char *s2, size_t n);
+void    ft_man(void);
 #endif
 
